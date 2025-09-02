@@ -1,0 +1,36 @@
+﻿ 
+@model MyQuiz.Dtos.QuestionChoiceDto.ChoiceUpdeatDto
+
+@{
+    ViewData["Title"] = "Edit Choices";
+}
+
+<div class="container py-5">
+    <h2 class="text-center text-primary mb-4">Edit Choice</h2>
+
+    <form asp-action="Edit" method="post" class="shadow-sm p-4 rounded border bg-light">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label asp-for="ChoiceName" class="form-label fs-5 fw-bold text-dark"></label>
+            <input asp-for="ChoiceName" class="form-control form-control-lg p-3" placeholder="Enter Choice Name" />
+            <span asp-validation-for="ChoiceName" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-save me-2"></i> Save Changes
+            </button>
+
+            <a asp-action="Index" class="btn btn-outline-primary btn-lg">
+                <i class="bi bi-arrow-left-circle me-2"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

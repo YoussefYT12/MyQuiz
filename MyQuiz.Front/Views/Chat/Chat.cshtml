@@ -1,0 +1,52 @@
+﻿
+
+
+
+
+
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+
+<script>
+    $(function () {
+       
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5156/ChatHub")  
+            .configureLogging(signalR.LogLevel.Information) 
+            .build();
+
+       
+        connection.start().then(function () {
+            console.log("Connected to SignalR Hub.");
+        }).catch(function (err) {
+            console.error("Error while starting connection: " + err);
+        });
+
+        
+        $("#btn").click(function () {
+            var message = $('#txt1').val();
+            if (message) {  
+                connection.invoke('sendMsg', message).catch(function (err) {
+                    console.error("Error while sending message: " + err);
+                });
+            } else {
+                alert("Please enter a message.");
+            }
+        });
+
+        
+        connection.on('display', function (data) {
+            $('#all').append($('<li>').text(data));
+        });
+    });
+</script>
+
+<br />
+
+<label for="txt1">Message:</label>
+<input id="txt1" class="form-control mb-2" />
+
+
+<input type="button" id="btn" value="Send message" class="btn btn-primary" />
+
+
+<ul id="all"></ul>
